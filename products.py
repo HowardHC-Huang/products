@@ -22,3 +22,9 @@ while True:
 print(products)
 
 #products[0][0]  #練習存取二維清單: [第1個商品],[品名]
+
+#[延伸]為熟悉二維清單, 寫一for循環印出商品/價格
+for p in products:
+	print(p)   #印出車廂中的小清單[ramen, 220]
+	print(p[0]) #印出車廂中的小清單,第1個(就是品名)
+	print(p[0], '的價格是', p[1])
