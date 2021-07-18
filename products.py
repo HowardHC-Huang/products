@@ -23,8 +23,17 @@ print(products)
 
 #products[0][0]  #練習存取二維清單: [第1個商品],[品名]
 
+
 #[延伸]為熟悉二維清單, 寫一for循環印出商品/價格
 for p in products:
 	print(p)   #印出車廂中的小清單[ramen, 220]
 	print(p[0]) #印出車廂中的小清單,第1個(就是品名)
 	print(p[0], '的價格是', p[1])
+
+
+#[延伸]檔案寫入+ 註解欄位
+with open("products.csv", "w", encoding = 'utf-8') as f:	#as f(as file):當作f,易忘!有了這個我就可以用f來稱呼我打開的整個檔案了
+										#沒products.txt沒關係,會自建;有該檔也沒關係,會覆寫(改存csv較方便)
+	f.write('商品,價格\n')	##加寫欄位,但發現是亂碼(編碼問題),在上行加註以utf-8寫入
+	for p in products:	#用for循環,一個個存取我們清單的商品
+		f.write(p[0] + ',' + p[1] + '\n')	#"品名"併"價格"併"換行"
