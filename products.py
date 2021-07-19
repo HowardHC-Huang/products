@@ -8,7 +8,18 @@
 #iii.二維清單創好了,我們來看怎麼存取
 
 products = []  #i2.我們要用一個清單裝input的商品,創products清單
+#[延伸3]  檔案"讀取" (為了讀要先,才寫在開頭)
+with open('products.csv', 'r', encoding='utf-8') as f:
+	for line in f:
+		if '商品,價格' in line:  #跳過欄位名稱: 如果資料是"商品,價格(欄位名稱)"就跳到下一循環
+			continue
+		s = line.strip().split(',')  #去除換行記號+以逗點為分隔
+		name = s[0]
+		price = s[1]
+		products.append([name, price])
+print(products)
 
+#[開始]
 while True:
 	name = input('請輸入商品名稱:')  #i1.使用者輸入商品名
 	if name == 'q':  #i1-1.quit輸入迴圈
@@ -20,18 +31,15 @@ while True:
 	#上三行亦可寫成 p = [name, price]
 	products.append(p)  #i2-1.input裝進"清單products"	#ii1-1.清單我不裝商品名name了,改裝小清單(二維)
 print(products)
-
 #products[0][0]  #練習存取二維清單: [第1個商品],[品名]
 
-
-#[延伸]為熟悉二維清單, 寫一for循環印出商品/價格
+#[延伸1]為熟悉二維清單, 寫一for循環印出商品/價格
 for p in products:
 	print(p)   #印出車廂中的小清單[ramen, 220]
 	print(p[0]) #印出車廂中的小清單,第1個(就是品名)
 	print(p[0], '的價格是', p[1])
 
-
-#[延伸]檔案寫入+ 註解欄位
+#[延伸2]檔案"寫入"+ 註解欄位
 with open("products.csv", "w", encoding = 'utf-8') as f:	#as f(as file):當作f,易忘!有了這個我就可以用f來稱呼我打開的整個檔案了
 										#沒products.txt沒關係,會自建;有該檔也沒關係,會覆寫(改存csv較方便)
 	f.write('商品,價格\n')	##加寫欄位,但發現是亂碼(編碼問題),在上行加註以utf-8寫入
