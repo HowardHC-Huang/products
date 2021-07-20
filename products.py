@@ -7,17 +7,28 @@
 #方法三:第一次見識"兩個維度"的清單,簡單來說就是:清單中還有清單.大清單中,還有很多小小的清單(火車廂中還有橫向小車廂)
 #iii.二維清單創好了,我們來看怎麼存取
 
+
+#[延伸4] 檢查csv檔(是否存在)
+import os  #operating system(檢查檔案是否存在,是OS在管的)
+
 products = []  #i2.我們要用一個清單裝input的商品,創products清單
-#[延伸3]  檔案"讀取" (為了讀要先,才寫在開頭)
-with open('products.csv', 'r', encoding='utf-8') as f:
-	for line in f:
-		if '商品,價格' in line:  #跳過欄位名稱: 如果資料是"商品,價格(欄位名稱)"就跳到下一循環
-			continue
-		s = line.strip().split(',')  #去除換行記號+以逗點為分隔
-		name = s[0]
-		price = s[1]
-		products.append([name, price])
-print(products)
+if os.path.isfile('products.csv'):  #請問政府大人:這個地方有沒有這個檔案(相對路徑即可,不同資料夾才用絕對路徑)
+	print('找到檔案了')
+
+#[延伸3] 檔案"讀取" (為了讀要先,才寫在開頭)
+	with open('products.csv', 'r', encoding='utf-8') as f:
+		for line in f:
+			if '商品,價格' in line:  #跳過欄位名稱: 如果資料是"商品,價格(欄位名稱)"就跳到下一循環
+				continue
+			s = line.strip().split(',')  #去除換行記號+以逗點為分隔
+			name = s[0]
+			price = s[1]
+			products.append([name, price])
+	print(products)
+
+else:
+	print('找不到檔案...')
+
 
 #[開始]
 while True:
@@ -25,6 +36,7 @@ while True:
 	if name == 'q':  #i1-1.quit輸入迴圈
 		break
 	price = input('請輸入價格:')  #ii1.使用者輸入價格,會遇到問題,要用二維清單
+	price = int(price)
 	p = []  #ii1-2.建立小清單
 	p.append(name)
 	p.append(price)
@@ -33,13 +45,13 @@ while True:
 print(products)
 #products[0][0]  #練習存取二維清單: [第1個商品],[品名]
 
-#[延伸1]為熟悉二維清單, 寫一for循環印出商品/價格
+#[延伸1] 印出所有購買紀錄 (為熟悉二維清單,寫一for循環印出商品/價格)
 for p in products:
-	print(p)   #印出車廂中的小清單[ramen, 220]
-	print(p[0]) #印出車廂中的小清單,第1個(就是品名)
+#	print(p)   #印出車廂中的小清單[ramen, 220]
+#	print(p[0]) #印出車廂中的小清單,第1個(就是品名)
 	print(p[0], '的價格是', p[1])
 
-#[延伸2]檔案"寫入"+ 註解欄位
+#[延伸2] 檔案"寫入" & 註解欄位
 with open("products.csv", "w", encoding = 'utf-8') as f:	#as f(as file):當作f,易忘!有了這個我就可以用f來稱呼我打開的整個檔案了
 										#沒products.txt沒關係,會自建;有該檔也沒關係,會覆寫(改存csv較方便)
 	f.write('商品,價格\n')	##加寫欄位,但發現是亂碼(編碼問題),在上行加註以utf-8寫入
